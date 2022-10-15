@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578517110226",
+    "project_id": "login-749fb",
+    "storage_bucket": "login-749fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578517110226:android:bf2ade4b291dadede84c0b",
+        "android_client_info": {
+          "package_name": "com.example.programarotacionbeta2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578517110226-k8lbvbigkcq1oq8r47rb4dfpsup3f6ep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiGpPSgUMjTFW2NW69u_thsH56sHIeAg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578517110226-k8lbvbigkcq1oq8r47rb4dfpsup3f6ep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
