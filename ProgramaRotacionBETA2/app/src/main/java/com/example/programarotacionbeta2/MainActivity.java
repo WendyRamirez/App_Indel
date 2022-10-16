@@ -93,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
             hora_actual_num = Integer.parseInt(hora_actual);
             Minutos = Integer.parseInt(cambiorecycler);
 
+            if(hora_actual_num == 0)
+            {
+                editor.putInt("hora", hora_actual_num);
+                editor.commit();
+                hora_guardada_num = preferences.getInt("hora", 0);
+            }
+
             if (Objects.equals(preferences.getInt("hora", 0), 0)
                     || Objects.equals(preferences.getInt("hora", 0), null)) {
                 editor.putInt("hora", hora_actual_num);
