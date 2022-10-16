@@ -62,7 +62,7 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                pDialog.show();
+                                pDialog.dismiss();
                                 SweetAlertDialog correcto = new SweetAlertDialog(Login.this, SweetAlertDialog.SUCCESS_TYPE);
                                 correcto.setTitleText("CORRECTO!");
                                 correcto.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
 
 
                             } else {
-                                pDialog.show();
+                                pDialog.dismiss();
                                 new SweetAlertDialog(Login.this, SweetAlertDialog.ERROR_TYPE)
                                         .setTitleText("ERROR!")
                                         .setContentText("No hemos podido autenticar al usuario....")
@@ -96,7 +96,7 @@ public class Login extends AppCompatActivity {
                         }
                     });
                 } else {
-                    pDialog.show();
+                    pDialog.dismiss();
                     new SweetAlertDialog(Login.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("ERROR!")
                             .setContentText("Rellene todos los campos")
