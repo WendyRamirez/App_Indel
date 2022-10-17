@@ -41,6 +41,8 @@ public class Login extends AppCompatActivity {
         Login = findViewById(R.id.btnLogin);
         correo = findViewById(R.id.edtUsuario);
         contraseña = findViewById(R.id.edtPassword);
+
+        //dialogo de carga tipo Sweet Alert
         pDialog = new SweetAlertDialog(Login.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.setTitleText("Cargando ...");
         pDialog.setCancelable(false);
@@ -56,12 +58,17 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pDialog.show();
+
+                //verifico que los campos no esten vacions
                 if (!contraseña.getText().toString().isEmpty() && !contraseña.getText().toString().isEmpty()) {
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(correo.getText().toString(),
                             contraseña.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+                                //si la autenticacion es correcta se muestra la alerta y se envia al usuario al
+                                //otro activity
                                 pDialog.dismiss();
                                 SweetAlertDialog correcto = new SweetAlertDialog(Login.this, SweetAlertDialog.SUCCESS_TYPE);
                                 correcto.setTitleText("CORRECTO!");
@@ -87,6 +94,8 @@ public class Login extends AppCompatActivity {
 
 
                             } else {
+
+                                //en caso de que algo falle se muestra una alerta de error
                                 pDialog.dismiss();
                                 new SweetAlertDialog(Login.this, SweetAlertDialog.ERROR_TYPE)
                                         .setTitleText("ERROR!")
@@ -96,6 +105,8 @@ public class Login extends AppCompatActivity {
                         }
                     });
                 } else {
+
+                    //se le indica con una alerta al usuario que no a rellenado los campos
                     pDialog.dismiss();
                     new SweetAlertDialog(Login.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("ERROR!")
@@ -105,43 +116,6 @@ public class Login extends AppCompatActivity {
             }
         });
 
-
-    }
-
-    // [START on_start_check_user]
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
-    // [END on_start_check_user]
-
-    private void startSignIn() {
-        // [START sign_in_custom]
-        mAuth.signInWithCustomToken(mCustomToken)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCustomToken:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCustomToken:failure", task.getException());
-                            Toast.makeText(Login.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-        // [END sign_in_custom]
-    }
-
-    private void updateUI(FirebaseUser user) {
 
     }
 }

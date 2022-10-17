@@ -44,15 +44,20 @@ public class MainActivity extends AppCompatActivity {
         dia = findViewById(R.id.DayClock);
         RVusuarios = findViewById(R.id.RVusuarios);
 
-        //Aqui se obtienen los datos de las fechas
+        //Aqui se obtienen la hora para el relog
         date = new SimpleDateFormat("HH:mm").format(new Date());
+
+        // obtengo los minutos actuales para que cuando pasen del minuto 30 cambiar la lista
         cambiorecycler = new SimpleDateFormat("mm").format(new Date());
+
+        //aqui obtengo la fecha
         day = new SimpleDateFormat("d 'de' MMMM").format(new Date());
 
         dia.setText(day);
         hora.setText(date);
         ejecutar();
 
+        //Aqui solo es para hacer transparente el status bar
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         } else {
@@ -70,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+                //vuelvo a obtener los datos anterirmente mensionados porque cambian costantemente
+                // y necesito que esten actualizados en todo momento para que funcione en tiempo real
                 cambiorecycler = new SimpleDateFormat("mm").format(new Date());
                 date = new SimpleDateFormat("HH:mm").format(new Date());
                 day = new SimpleDateFormat("d 'de' MMMM").format(new Date());
@@ -86,19 +94,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void cambiarrecycler() {
         try {
+            //evento donde se cambiara la lista
+
+            //decharo este archivo para poder almacenar de forma local el valor de la hora y no perderlo
+            // y poder saber que lista debo mostrar en cada momento
             preferences = getSharedPreferences("horario", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
 
+            //obtengo la hora en formato de 24 horas para poder saber que lista toca en esa hora
             hora_actual = new SimpleDateFormat("H").format(new Date());
+
+            //transformo los datos String de las horas y minutos a INT
             hora_actual_num = Integer.parseInt(hora_actual);
             Minutos = Integer.parseInt(cambiorecycler);
 
+
+            //verifico que si el valor de la hora actual es igual a 0
             if(hora_actual_num == 0)
             {
+                //si lo es eso significa que el dia se acabo por lo tanto la hora que guardo en el
+                //archivo cambiara a 0 de igual manera
                 editor.putInt("hora", hora_actual_num);
                 editor.commit();
                 hora_guardada_num = preferences.getInt("hora", 0);
             }
+
 
             if (Objects.equals(preferences.getInt("hora", 0), 0)
                     || Objects.equals(preferences.getInt("hora", 0), null)) {
@@ -107,19 +127,28 @@ public class MainActivity extends AppCompatActivity {
                 hora_guardada_num = preferences.getInt("hora", 0);
             }
 
+            //verifico que si la hora guardada es menor que la hora actual, esto por si el usuario
+            // no abre la app en varias horas y asi poder obtener la lista correspondiente a esa hora
             if (hora_guardada_num < hora_actual_num) {
                 hora_guardada_num = hora_actual_num;
             }
 
 
+            //pregunto si la hora actual es la misma que la hora guardada
             if (hora_guardada_num == hora_actual_num) {
+
+                //pregunto si los minutos actuales son igual o mayor que 30
                 if (Minutos >= 30) {
                     variable_1 = 1;
 
+                    //le sumo uno a la hora guardada y la registro, para que de esta manera no vuelva
+                    //a entrar a esta seccion asta que la hora actual cambie
                     hora_guardar = hora_guardada_num++;
                     editor.putInt("hora", hora_guardar);
                     editor.commit();
 
+                    //paso la lista del evento listausuarios a un adaptador para que rellene los datos
+                    //del diseño con los datos de la lista y los muestre en el recyclerview
                     AdapterUsers adapter = new AdapterUsers(listausuarios(hora_actual_num), MainActivity.this);
                     RVusuarios.setHasFixedSize(true);
                     RVusuarios.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -127,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (variable_1 == 1) {
 
+                    //si los minutos son menores a 30 eso significa que debo de mandarle la lista
+                    // de la hora anterior asi que le resto uno a la hora actual y se la paso al
+                    // evento de listausuario
                     AdapterUsers adapter = new AdapterUsers(listausuarios(hora_actual_num - 1), MainActivity.this);
                     RVusuarios.setHasFixedSize(true);
                     RVusuarios.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -136,55 +168,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else if (variable_1 == 1) {
 
+                //si la hora actual y la hora guardada no son iguales eso significa los minutos actuales
+                //superan los 30 por ende se muestra la lista de la hora actual
                 AdapterUsers adapter = new AdapterUsers(listausuarios(hora_actual_num), MainActivity.this);
                 RVusuarios.setHasFixedSize(true);
                 RVusuarios.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 RVusuarios.setAdapter(adapter);
 
+                //iguala  0 la variable de verificacion para que solo entre una veces, y no este constantemente
+                //refrescando la lista cuando la hora no a cambiado
                 variable_1 = 0;
             }
 
-
-            /*if (Minutos >= 30 && Minutos <= 59) {
-                    if (variable_1 == 0) {
-                        UserList.clear();
-                        UserList.add(new DatosUsuarios("Indelfonso", 10));
-                        UserList.add(new DatosUsuarios("Gabriel", 20));
-                        UserList.add(new DatosUsuarios("Sara", 30));
-                        UserList.add(new DatosUsuarios("Samuel", 40));
-                        UserList.add(new DatosUsuarios("Luis", 50));
-                        UserList.add(new DatosUsuarios("Gerardo", 60));
-                        UserList.add(new DatosUsuarios("Rene", 70));
-                        AdapterUsers adapter = new AdapterUsers(UserList, MainActivity.this);
-                        RVusuarios.setHasFixedSize(true);
-                        RVusuarios.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                        RVusuarios.setAdapter(adapter);
-                        variable_1 = 1;
-                        Variable_2 = 0;
-
-                }
-            }else if(Minutos >= 0 && Minutos <= 29){
-                    if (Variable_2 == 0) {
-
-                    UserList.clear();
-                    UserList.add(new DatosUsuarios("Edgar", 1));
-                    UserList.add(new DatosUsuarios("Carlos", 2));
-                    UserList.add(new DatosUsuarios("Wendy", 3));
-                    UserList.add(new DatosUsuarios("Mayte", 4));
-                    UserList.add(new DatosUsuarios("Valeria", 5));
-                    UserList.add(new DatosUsuarios("Daniel", 6));
-                    UserList.add(new DatosUsuarios("Mauricio", 7));
-                    AdapterUsers adapter = new AdapterUsers(UserList, MainActivity.this);
-                    RVusuarios.setHasFixedSize(true);
-                    RVusuarios.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                    RVusuarios.setAdapter(adapter);
-
-                    variable_1 =0;
-                    Variable_2 = 1;
-                }else{
-                    contador = 1;
-                }
-            }*/
 
         } catch (Exception e) {
 
@@ -193,10 +188,16 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<DatosUsuarios> listausuarios(int hora){
 
+        //en base a la hora enviada se generar la lista
         switch (hora){
+
+            //lo indicado en el case 13 aplica para todos los demas
             case 13:{
 
+                //vacia la lista
                 UserList.clear();
+
+                //aqui se añaden los daros a la lista
                 UserList.add(new DatosUsuarios("Edgar", 1));
                 UserList.add(new DatosUsuarios("Carlos", 2));
                 UserList.add(new DatosUsuarios("Wendy", 3));
@@ -340,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-
+        //regresa la lista a donde fue llamado el evento
         return UserList;
     }
 
