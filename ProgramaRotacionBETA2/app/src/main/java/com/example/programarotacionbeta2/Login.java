@@ -59,7 +59,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 pDialog.show();
 
-                //verifico que los campos no esten vacions
+                //verifico que los campos no esten vacios
                 if (!contraseña.getText().toString().isEmpty() && !contraseña.getText().toString().isEmpty()) {
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(correo.getText().toString(),
                             contraseña.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -67,8 +67,8 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                //si la autenticacion es correcta se muestra la alerta y se envia al usuario al
-                                //otro activity
+                                //si la autenticacion es correcta se muestra la alerta y se envia al
+                                // usuario al otro activity
                                 pDialog.dismiss();
                                 SweetAlertDialog correcto = new SweetAlertDialog(Login.this, SweetAlertDialog.SUCCESS_TYPE);
                                 correcto.setTitleText("CORRECTO!");

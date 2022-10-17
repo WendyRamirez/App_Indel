@@ -110,8 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             //verifico que si el valor de la hora actual es igual a 0
-            if(hora_actual_num == 0)
-            {
+            if (hora_actual_num == 0) {
                 //si lo es eso significa que el dia se acabo por lo tanto la hora que guardo en el
                 //archivo cambiara a 0 de igual manera
                 editor.putInt("hora", hora_actual_num);
@@ -186,13 +185,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList<DatosUsuarios> listausuarios(int hora){
+    public ArrayList<DatosUsuarios> listausuarios(int hora) {
 
         //en base a la hora enviada se generar la lista
-        switch (hora){
+        switch (hora) {
 
             //lo indicado en el case 13 aplica para todos los demas
-            case 13:{
+            case 13: {
 
                 //vacia la lista
                 UserList.clear();
@@ -208,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 14:{
+            case 14: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Indelfonso", 10));
                 UserList.add(new DatosUsuarios("Gabriel", 20));
@@ -221,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 15:{
+            case 15: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Lopez", 11));
                 UserList.add(new DatosUsuarios("Raya", 21));
@@ -233,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 16:{
+            case 16: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Castro", 12));
                 UserList.add(new DatosUsuarios("Marquez", 22));
@@ -245,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 17:{
+            case 17: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Juan", 13));
                 UserList.add(new DatosUsuarios("Manuel", 23));
@@ -257,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 18:{
+            case 18: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Brayan", 14));
                 UserList.add(new DatosUsuarios("Celia", 24));
@@ -269,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 19:{
+            case 19: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Hugo", 15));
                 UserList.add(new DatosUsuarios("Mateo", 25));
@@ -281,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 20:{
+            case 20: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Berjamin", 16));
                 UserList.add(new DatosUsuarios("Aldo", 26));
@@ -293,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 21:{
+            case 21: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Edgar", 17));
                 UserList.add(new DatosUsuarios("Carlos", 27));
@@ -305,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 22:{
+            case 22: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Indelfonso", 10));
                 UserList.add(new DatosUsuarios("Gabriel", 20));
@@ -317,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 23:{
+            case 23: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Lopez", 11));
                 UserList.add(new DatosUsuarios("Raya", 21));
@@ -329,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case 0:{
+            case 0: {
                 UserList.clear();
                 UserList.add(new DatosUsuarios("Castro", 12));
                 UserList.add(new DatosUsuarios("Marquez", 22));
